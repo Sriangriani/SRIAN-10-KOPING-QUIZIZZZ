@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SRIAN-10 Koping Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f0f9f6;
+      color: #333;
+      text-align: center;
+    }
+    header {
+      background: linear-gradient(135deg, #a8edea, #fed6e3);
+      padding: 30px;
+      border-bottom-left-radius: 40% 10%;
+      border-bottom-right-radius: 40% 10%;
+    }
+    header svg {
+      width: 100px;
+      height: auto;
+    }
+    h1 {
+      font-size: 1.8em;
+      margin-top: 10px;
+    }
+    .quiz-container {
+      max-width: 700px;
+      margin: 30px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 15px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: left;
+    }
+    .question {
+      margin: 20px 0;
+    }
+    button {
+      display: block;
+      margin: 20px auto;
+      padding: 12px 25px;
+      font-size: 1em;
+      background: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    #result {
+      margin-top: 25px;
+      padding: 20px;
+      background: #eafaf1;
+      border-radius: 12px;
+      font-size: 1.1em;
+      text-align: center;
+      display: none;
+    }
+    .result-icon {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <!-- Pohon SVG -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+      <circle cx="32" cy="20" r="12" fill="#6dbf73"/>
+      <rect x="28" y="32" width="8" height="20" fill="#8b5e3c"/>
+    </svg>
+    <h1>🌿 SRIAN-10 Koping Quiz</h1>
+    <p>Tenangkan diri, temukan gaya kopingmu 🌿</p>
+  </header>
+
+  <div class="quiz-container">
+    <p><b>Deskripsi:</b> Strategi koping adalah cara seseorang menghadapi tekanan atau stres. 
+      Dengan memahami gaya koping, kita bisa menemukan strategi yang lebih sehat untuk menjaga kesejahteraan psikologis.</p>
+
+    <form id="quizForm">
+      <div class="question">
+        <p>1. Ketika menghadapi masalah besar, saya…</p>
+        <label><input type="radio" name="q1" value="A"> A. Mencari solusi langkah demi langkah</label><br>
+        <label><input type="radio" name="q1" value="B"> B. Menunda, berharap masalah hilang sendiri</label><br>
+        <label><input type="radio" name="q1" value="C"> C. Marah atau frustrasi</label>
+      </div>
+
+      <!-- Tambahkan pertanyaan 2 - 10 dengan pola sama -->
+      <!-- untuk ringkasnya saya tampilkan contoh 3 dulu -->
+
+      <div class="question">
+        <p>2. Saat saya stres, saya lebih suka…</p>
+        <label><input type="radio" name="q2" value="A"> A. Bicara dengan orang terpercaya</label><br>
+        <label><input type="radio" name="q2" value="B"> B. Tidur atau menghindar</label><br>
+        <label><input type="radio" name="q2" value="C"> C. Melampiaskan dengan menangis/marah</label>
+      </div>
+
+      <div class="question">
+        <p>3. Dalam tekanan, saya…</p>
+        <label><input type="radio" name="q3" value="A"> A. Membuat rencana untuk menyelesaikan</label><br>
+        <label><input type="radio" name="q3" value="B"> B. Mengalihkan perhatian dengan hiburan</label><br>
+        <label><input type="radio" name="q3" value="C"> C. Merasa cemas berlebihan</label>
+      </div>
+
+      <!-- dst sampai q10 -->
+
+      <button type="button" onclick="calculateResult()">Lihat Hasil</button>
+    </form>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    function calculateResult() {
+      const form = document.getElementById('quizForm');
+      const data = new FormData(form);
+      let scores = { A: 0, B: 0, C: 0 };
+
+      for (let [key, value] of data.entries()) {
+        scores[value]++;
+      }
+
+      let resultDiv = document.getElementById('result');
+      resultDiv.style.display = 'block';
+      let message = "";
+      let icon = "";
+
+      if (scores.A >= scores.B && scores.A >= scores.C) {
+        icon = "💡";
+        message = "<b>Problem-Focused Coping</b><br>Anda cenderung menghadapi masalah dengan mencari solusi. Pertahankan kebiasaan ini!";
+      } else if (scores.B >= scores.A && scores.B >= scores.C) {
+        icon = "🍃";
+        message = "<b>Avoidance-Focused Coping</b><br>Anda cenderung menghindari masalah. Sesekali perlu, tapi jangan lupakan solusi jangka panjang.";
+      } else {
+        icon = "💖";
+        message = "<b>Emotion-Focused Coping</b><br>Anda cenderung menyalurkan perasaan untuk menghadapi stres. Seimbangkan dengan mencari dukungan positif.";
+      }
+
+      resultDiv.innerHTML = `<span class="result-icon">${icon}</span>
+        Skor Anda: A=${scores.A}, B=${scores.B}, C=${scores.C}<br><br>${message}`;
+    }
+  </script>
+</body>
+</html>
